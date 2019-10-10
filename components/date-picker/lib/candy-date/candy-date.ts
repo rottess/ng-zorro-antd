@@ -11,8 +11,9 @@ import addYears from 'date-fns/add_years';
 import endOfMonth from 'date-fns/end_of_month';
 import setDay from 'date-fns/set_day';
 import setMonth from 'date-fns/set_month';
+import * as moment_ from 'moment';
 import { IndexableObject } from 'ng-zorro-antd/core';
-
+const moment = moment_;
 /**
  * Wrapping kind APIs for date operating and unify
  * NOTE: every new API return new CandyDate object without side effects to the former Date object
@@ -23,7 +24,7 @@ export class CandyDate implements IndexableObject {
   nativeDate: Date;
   // locale: string; // Custom specified locale ID
 
-  constructor(date?: Date | string) {
+  constructor(date?: Date | string, format?: string) {
     // if (!(this instanceof CandyDate)) {
     //   return new CandyDate(date);
     // }
@@ -32,7 +33,11 @@ export class CandyDate implements IndexableObject {
       if (date instanceof Date) {
         this.nativeDate = date;
       } else if (typeof date === 'string') {
-        this.nativeDate = new Date(date);
+        if (format) {
+          this.nativeDate = moment(date, format.toUpperCase()).toDate();
+        } else {
+          this.nativeDate = new Date(date);
+        }
       } else {
         throw new Error('The input date type is not supported ("Date" and "string" is now recommended)');
       }

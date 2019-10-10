@@ -1,6 +1,6 @@
 {
   "name": "ng-zorro-antd",
-  "version": "0.0.0-NOT-USED",
+  "version": "7.5.2",
   "license": "MIT",
   "description": "An enterprise-class UI components based on Ant Design and Angular",
   "engines": {
@@ -43,7 +43,8 @@
   "dependencies": {
     "@angular/cdk": "^7.3.0",
     "@ant-design/icons-angular": "^2.1.0",
-    "date-fns": "^1.29.0"
+    "date-fns": "^1.29.0",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
