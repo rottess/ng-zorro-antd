@@ -6,11 +6,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+/**
+ * @license
+ * Copyright Alibaba.com All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
 import addMonths from 'date-fns/add_months';
 import addYears from 'date-fns/add_years';
 import endOfMonth from 'date-fns/end_of_month';
 import setDay from 'date-fns/set_day';
 import setMonth from 'date-fns/set_month';
+import * as moment from 'moment';
 import { IndexableObject } from 'ng-zorro-antd/core';
 
 /**
@@ -21,18 +30,23 @@ import { IndexableObject } from 'ng-zorro-antd/core';
  */
 export class CandyDate implements IndexableObject {
   nativeDate: Date;
+  format: string | undefined;
   // locale: string; // Custom specified locale ID
 
-  constructor(date?: Date | string) {
+  constructor(date?: Date | string, format?: string | undefined) {
     // if (!(this instanceof CandyDate)) {
     //   return new CandyDate(date);
     // }
-
+    this.format = format;
     if (date) {
       if (date instanceof Date) {
         this.nativeDate = date;
       } else if (typeof date === 'string') {
-        this.nativeDate = new Date(date);
+        if (this.format !== undefined) {
+          this.nativeDate = moment(date, this.format.toUpperCase()).toDate();
+        } else {
+          this.nativeDate = new Date(date);
+        }
       } else {
         throw new Error('The input date type is not supported ("Date" and "string" is now recommended)');
       }
